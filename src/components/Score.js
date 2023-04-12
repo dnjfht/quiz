@@ -26,7 +26,7 @@ const ScoreWrap = styled.div`
   justify-content: space-between;
 `;
 
-const HomeButton = styled.button`
+const GoMessageButton = styled.button`
   width: 200px;
   height: 60px;
   padding: 10px;
@@ -147,8 +147,10 @@ export default function Score() {
   console.log(quiz_list[0].answer);
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list);
   console.log(user_answer_list);
-  const nickName = useSelector((state) => state.user.nickName);
-  console.log(nickName);
+  const name = useSelector((state) => state.quiz.name);
+  console.log(name);
+  const score_texts = useSelector((state) => state.quiz.score_text);
+  console.log(score_texts);
 
   const _score =
     (100 / quiz_list.length) *
@@ -160,6 +162,20 @@ export default function Score() {
 
   const score = Math.round(_score);
   console.log(score);
+
+  // 점수별로 텍스트를 띄워줄 준비!
+  let score_text = "";
+
+  // Object.keys는 딕셔너리의 키값을 배열로 만들어주는 것.
+  // [40, 60, 80, 100]
+  Object.keys(score_texts).map((s, idx) => {
+    // 첫번째 텍스트 넣어주기
+    if (idx === 0) {
+      score_text = score_texts[s];
+    }
+    // 실제 점수와 기준 점수(키로 넣었던 점수) 비교해서 텍스트를 넣자!
+    score_text = parseInt(s) <= score ? score_texts[s] : score_text;
+  });
 
   const navigate = useNavigate();
 
@@ -173,7 +189,7 @@ export default function Score() {
             alignItems: "center",
           }}
         >
-          <Point>{nickName}</Point> 퀴즈에 대한
+          <Point>{name}</Point> 퀴즈에 대한
         </div>
         내 점수는?
       </ScoreTitle>
@@ -182,23 +198,15 @@ export default function Score() {
         <Point2>{score}</Point2>점
       </ScoreNumber>
 
-      <Comment>
-        {score > 90
-          ? `최현욱을 정말 좋아하시는군요!?💖`
-          : score > 70
-          ? `최현욱을 조금 더 열성적으로 좋아해보세요!💕`
-          : score > 50
-          ? `최현욱한테 입덕한지 얼마 안되셨군요?🧡`
-          : `다정하고 잘생긴 최현욱이랑 친해지기~^-^💛`}
-      </Comment>
+      <Comment>{score_text}</Comment>
 
-      <HomeButton
+      <GoMessageButton
         onClick={() => {
-          navigate("/");
+          navigate("/message");
         }}
       >
-        Home으로 이동
-      </HomeButton>
+        {name}에게 한 마디
+      </GoMessageButton>
     </ScoreWrap>
   );
 }

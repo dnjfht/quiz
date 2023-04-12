@@ -12,8 +12,8 @@ import img09 from "../img/img09.jpg";
 import img10 from "../img/img10.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { useRef } from "react";
-import { changeName } from "../redux/modules/user";
 import { useNavigate } from "react-router-dom";
+import { addUserNameChange } from "../redux/modules/rank";
 
 const Wrap = styled.div`
   width: 100%;
@@ -136,8 +136,7 @@ const randomNumber = parseInt(10 * Math.random()) + 1;
 console.log(randomNumber);
 
 export default function Start() {
-  const name = useSelector((state) => state.user.nickName);
-  console.log(name);
+  const name = useSelector((state) => state.quiz.name);
 
   const dispatch = useDispatch();
 
@@ -148,7 +147,7 @@ export default function Start() {
   const handleNameChange = (event) => {
     event.preventDefault();
 
-    dispatch(changeName(nameInput.current.value));
+    dispatch(addUserNameChange(nameInput.current.value));
 
     nameInput.current.value = "";
 

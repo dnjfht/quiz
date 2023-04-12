@@ -15,6 +15,7 @@ import img08 from "../img/img08.jpg";
 import img09 from "../img/img09.jpg";
 import img10 from "../img/img10.jpg";
 import { useEffect } from "react";
+import Progress from "./Progress";
 
 const QuizWrap = styled.div`
   width: 100%;
@@ -25,6 +26,7 @@ const QuizWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const Title = styled.h3`
@@ -63,7 +65,6 @@ const Point = styled.div`
 const ImageWrap = styled.img`
   width: 300px;
   height: 300px;
-  margin-top: 30px;
 
   object-fit: cover;
 `;
@@ -74,7 +75,6 @@ const Question = styled.h3`
 
 const SelectAnswerWrap = styled.div`
   width: 100%;
-  margin-top: 30px;
 
   display: flex;
   flex-direction: row;
@@ -85,7 +85,7 @@ const SelectAnswerButton = styled.button`
   background-color: transparent;
   border: none;
 
-  font-size: 80px;
+  font-size: 60px;
   color: #e2167d;
 
   transition: all 0.5s;
@@ -97,11 +97,12 @@ const SelectAnswerButton = styled.button`
 
 const QuestionWrap = styled.div`
   width: 100%;
-  height: 80px;
+  height: 60px;
 
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
 `;
 
 const randomImgArr = [
@@ -122,6 +123,9 @@ const randomNumber = parseInt(10 * Math.random()) + 1;
 console.log(randomNumber);
 
 export default function Quiz() {
+  const userName = useSelector((state) => state.rank.user_name);
+  console.log(userName);
+
   const quiz_list = useSelector((state) => state.quiz.quiz_list);
   console.log(quiz_list);
   const user_answer_list = useSelector((state) => state.quiz.user_answer_list);
@@ -144,6 +148,8 @@ export default function Quiz() {
 
   return (
     <QuizWrap>
+      <Progress />
+
       <Title>
         <Point>{user_answer_list.length + 1}번째</Point> 퀴즈
       </Title>
