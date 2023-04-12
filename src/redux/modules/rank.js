@@ -60,6 +60,12 @@ const rank = (state = initialState, action) => {
     case ADDUSERNAMECHANGE: {
       return { ...state, user_name: action.payload };
     }
+    case ADDUSERMESSAGE: {
+      return { ...state, user_message: action.payload.message };
+    }
+    case ADDRANK: {
+      return { ...state, ranking: [...state.ranking, action.payload] };
+    }
     default:
       return state;
   }
