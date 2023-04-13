@@ -5,6 +5,8 @@ const GETQUIZ = "get_quiz";
 // 유저의 응답(퀴즈 답)을 추가한다
 const ADDANSWER = "add_answer";
 
+const RESETANSWER = "reset_answer";
+
 // action creator
 export const addAnswer = (payload) => {
   return {
@@ -16,6 +18,13 @@ export const addAnswer = (payload) => {
 export const getQuiz = (payload) => {
   return {
     type: GETQUIZ,
+    payload: payload,
+  };
+};
+
+export const resetAnswer = (payload) => {
+  return {
+    type: RESETANSWER,
     payload: payload,
   };
 };
@@ -66,6 +75,9 @@ const quiz = (state = initialState, action) => {
     case ADDANSWER: {
       const new_user_quiz_list = [...state.user_answer_list, action.payload];
       return { ...state, user_answer_list: new_user_quiz_list };
+    }
+    case RESETANSWER: {
+      return { ...state, user_answer_list: [] };
     }
     default:
       return state;
